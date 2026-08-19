@@ -2,21 +2,23 @@ terraform {
   backend "s3" {
     bucket = "my-terraform-state-itishree"
     key    = "website/terraform.tfstate"
-    region = "us-east-2”
+    region = "us-east-1"
   }
 }
 
 provider "aws" {
-  region = "us-east-2”
+  region = "us-east-2"
 }
 
 resource "aws_s3_bucket" "website" {
-  bucket = "Jayaguru”
+  bucket = "Jayaguru"
 }
 
 resource "aws_s3_bucket_website_configuration" "website" {
   bucket = aws_s3_bucket.website.id
-  index_document { suffix = "index.html" }
+  index_document {
+    suffix = "index.html"
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "website" {
