@@ -32,5 +32,4 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Deploy site to S3
-        run: |
-          aws s3 sync . s3://jayaguru                     --exclude "*"
+        run: aws s3 cp index.html s3://jayaguru/index.html
