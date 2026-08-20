@@ -12,6 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Trivy security scan        
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs                  # scan filesystem
+          scan-ref: .                    # scan current directory
+          severity: CRITICAL,HIGH        # only flag critical and high issues
+          exit-code: 0
+  
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -27,6 +35,13 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+
+      - name: Checkov security scan      # 👈 add this
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          framework: terraform
+          soft_fail: true 
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
